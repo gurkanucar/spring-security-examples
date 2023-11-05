@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@Table(name = "ROLE")
+@Table(name = "ROLES")
 @Getter
 @Setter
 public class Role extends BaseEntity implements GrantedAuthority {
@@ -18,6 +18,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "authority_name")
   private String authority;
 
   @ManyToMany(
@@ -26,6 +27,4 @@ public class Role extends BaseEntity implements GrantedAuthority {
       mappedBy = "authorities")
   @JsonIgnore
   private Set<User> users = new HashSet<>();
-
-
 }
