@@ -68,6 +68,14 @@
         <!--        </dependency>-->
 
 
+        <!-- JSON Web Token (JWT) support -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+
         <!-- Lombok: for generating getters, setters, and other utility methods using annotations -->
         <dependency>
             <groupId>org.projectlombok</groupId>

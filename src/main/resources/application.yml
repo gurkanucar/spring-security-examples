@@ -7,8 +7,6 @@
 #    hibernate:
 #      ddl-auto: create
 
-
-
 spring:
   h2:
     console:
@@ -19,3 +17,8 @@ spring:
     hibernate:
       ddl-auto: create
 
+jwt-variables:
+  EXPIRES_ACCESS_TOKEN_MINUTE: 208888
+  EXPIRES_REFRESH_TOKEN_MINUTE: 208888
+  ISSUER: dev
+  KEY: asdqwe123+K3Y
