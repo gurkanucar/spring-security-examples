@@ -1,9 +1,11 @@
 package com.gucardev.springsecurityexamples.model;
 
 import jakarta.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -37,9 +39,12 @@ public class User extends BaseEntity implements UserDetails {
   @Column(name = "credentials_non_expired", columnDefinition = "boolean default true")
   private boolean credentialsNonExpired;
 
-  @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-  @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
-  private Set<Role> authorities;
+  private Role authority;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return Set.of(this.authority);
+  }
 }

@@ -3,7 +3,6 @@ package com.gucardev.springsecurityexamples;
 import com.gucardev.springsecurityexamples.dto.UserDto;
 import com.gucardev.springsecurityexamples.model.Role;
 import com.gucardev.springsecurityexamples.service.UserService;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public class Startup implements CommandLineRunner {
     admin.setCredentialsNonExpired(true);
     admin.setAccountNonExpired(true);
     admin.setAccountNonLocked(true);
-    admin.setAuthorities(Set.of(Role.ROLE_ADMIN, Role.ROLE_MOD));
+    admin.setAuthority(Role.ROLE_ADMIN);
     userService.createUser(admin);
 
     UserDto user = new UserDto();
@@ -40,14 +39,14 @@ public class Startup implements CommandLineRunner {
     user.setCredentialsNonExpired(true);
     user.setAccountNonExpired(true);
     user.setAccountNonLocked(true);
-    user.setAuthorities(Set.of(Role.ROLE_USER));
+    user.setAuthority(Role.ROLE_USER);
     userService.createUser(user);
 
     UserDto user2 = new UserDto();
     user2.setName("user2");
     user2.setUsername("user2");
     user2.setPassword("pass");
-    user2.setAuthorities(Set.of(Role.ROLE_USER));
+    user2.setAuthority(Role.ROLE_USER);
     userService.createUser(user2);
 
     UserDto mod = new UserDto();
@@ -58,7 +57,7 @@ public class Startup implements CommandLineRunner {
     mod.setCredentialsNonExpired(true);
     mod.setAccountNonExpired(true);
     mod.setAccountNonLocked(true);
-    mod.setAuthorities(Set.of(Role.ROLE_MOD));
+    mod.setAuthority(Role.ROLE_MOD);
     userService.createUser(mod);
   }
 }

@@ -11,10 +11,6 @@ public interface UserMapper {
 
   UserDto toDto(User entity);
 
-  default Role map(GrantedAuthority authority) {
-    return Role.valueOf(authority.getAuthority());
-  }
-
   User toEntity(UserDto entity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
