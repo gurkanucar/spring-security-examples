@@ -25,13 +25,13 @@ public class UserDto extends BaseDto {
   @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
-  private Boolean accountNonExpired;
+  private boolean accountNonExpired;
 
-  private Boolean isEnabled;
+  private boolean isEnabled;
 
-  private Boolean accountNonLocked;
+  private boolean accountNonLocked;
 
-  private Boolean credentialsNonExpired;
+  private boolean credentialsNonExpired;
 
   private Set<RoleDto> authorities;
 }

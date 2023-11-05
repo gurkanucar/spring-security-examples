@@ -1,7 +1,3 @@
-
-
-
-
 package com.gucardev.springsecurityexamples.controller;
 
 import org.springframework.http.ResponseEntity;
