@@ -23,6 +23,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
   private final JwtFilter jwtFilter;
+  private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
   @Bean
   public AuthenticationManager authenticationManager(
@@ -46,6 +48,11 @@ public class SecurityConfig {
         .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
         .csrf(AbstractHttpConfigurer::disable)
         .cors(Customizer.withDefaults())
+        .exceptionHandling(
+            handlingConfigurer -> {
+              handlingConfigurer.accessDeniedHandler(jwtAccessDeniedHandler);
+              handlingConfigurer.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+            })
         .formLogin(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(x -> x.anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults())
