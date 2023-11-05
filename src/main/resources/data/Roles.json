@@ -1,0 +1,11 @@
+[
+  {
+    "authority": "ADMIN"
+  },
+  {
+    "authority": "USER"
+  },
+  {
+    "authority": "MODERATOR"
+  }
+]
