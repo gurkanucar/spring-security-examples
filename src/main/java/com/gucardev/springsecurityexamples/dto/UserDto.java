@@ -6,10 +6,9 @@ import com.gucardev.springsecurityexamples.validation.UpdateValidationGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -27,13 +26,13 @@ public class UserDto extends BaseDto {
   @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
-  private Boolean accountNonExpired;
+  private boolean accountNonExpired;
 
-  private Boolean isEnabled;
+  private boolean isEnabled;
 
-  private Boolean accountNonLocked;
+  private boolean accountNonLocked;
 
-  private Boolean credentialsNonExpired;
+  private boolean credentialsNonExpired;
 
   private Set<Role> authorities;
 }

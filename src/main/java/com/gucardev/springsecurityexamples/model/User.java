@@ -37,7 +37,7 @@ public class User extends BaseEntity implements UserDetails {
   @Column(name = "credentials_non_expired", columnDefinition = "boolean default true")
   private boolean credentialsNonExpired;
 
-  @ElementCollection(targetClass = Role.class)
+  @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
   @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)

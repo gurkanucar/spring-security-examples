@@ -15,10 +15,6 @@ public interface UserMapper {
     return Role.valueOf(authority.getAuthority());
   }
 
-  @Mapping(target = "enabled", source = "isEnabled", defaultValue = "false")
-  @Mapping(target = "accountNonExpired", defaultValue = "true")
-  @Mapping(target = "accountNonLocked", defaultValue = "true")
-  @Mapping(target = "credentialsNonExpired", defaultValue = "true")
   User toEntity(UserDto entity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
