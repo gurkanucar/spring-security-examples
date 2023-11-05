@@ -4,7 +4,6 @@ import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import com.gucardev.springsecurityexamples.validation.UpdateValidationGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
