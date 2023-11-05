@@ -15,13 +15,13 @@ public class PrivateTestController {
     return ResponseEntity.ok("Hello Any Authenticated! This is private endpoint");
   }
 
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping("/admin")
   public ResponseEntity<String> sayHelloToAdmin() {
     return ResponseEntity.ok("Hello Admin! This is private endpoint");
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+  @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
   @GetMapping("/user")
   public ResponseEntity<String> sayHelloToUser() {
     return ResponseEntity.ok("Hello User! This is private endpoint");
