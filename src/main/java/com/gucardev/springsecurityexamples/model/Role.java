@@ -21,6 +21,11 @@ public class Role extends BaseEntity implements GrantedAuthority {
   @Column(name = "authority_name")
   private String authority;
 
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "role_endpoints", joinColumns = @JoinColumn(name = "role_id"))
+  @Column(name = "restricted_endpoint")
+  private Set<String> restrictedEndpoints = new HashSet<>();
+
   @ManyToMany(
       fetch = FetchType.LAZY,
       cascade = {CascadeType.PERSIST, CascadeType.MERGE},

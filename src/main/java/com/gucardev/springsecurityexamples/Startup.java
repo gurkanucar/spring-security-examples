@@ -28,6 +28,7 @@ public class Startup implements CommandLineRunner {
 
     RoleDto userRole = new RoleDto();
     userRole.setAuthority("USER");
+    userRole.setRestrictedEndpoints(Set.of("/users"));
     userRole = roleService.createRole(userRole);
 
     RoleDto modRole = new RoleDto();

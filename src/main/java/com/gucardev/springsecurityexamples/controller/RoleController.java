@@ -1,5 +1,6 @@
 package com.gucardev.springsecurityexamples.controller;
 
+import com.gucardev.springsecurityexamples.dto.RestrictedEndpoint;
 import com.gucardev.springsecurityexamples.dto.RoleDto;
 import com.gucardev.springsecurityexamples.service.RoleService;
 import java.util.List;
@@ -23,5 +24,15 @@ public class RoleController {
   @PostMapping
   public RoleDto createRole(@RequestBody RoleDto userDto) {
     return roleService.createRole(userDto);
+  }
+
+  @PostMapping("/restricted-endpoints")
+  public RoleDto addRestrictedEndpoint(@RequestBody RestrictedEndpoint restrictedEndpoint) {
+    return roleService.addRestrictedEndpoint(restrictedEndpoint);
+  }
+
+  @DeleteMapping("/restricted-endpoints")
+  public RoleDto deleteRestrictedEndpoint(@RequestBody RestrictedEndpoint restrictedEndpoint) {
+    return roleService.deleteRestrictedEndpoint(restrictedEndpoint);
   }
 }
