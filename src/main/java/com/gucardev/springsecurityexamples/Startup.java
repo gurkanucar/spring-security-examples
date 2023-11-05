@@ -4,7 +4,6 @@ import com.gucardev.springsecurityexamples.dto.RoleDto;
 import com.gucardev.springsecurityexamples.dto.UserDto;
 import com.gucardev.springsecurityexamples.service.RoleService;
 import com.gucardev.springsecurityexamples.service.UserService;
-import com.gucardev.springsecurityexamples.util.JsonProcessorUtil;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -14,16 +13,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Startup implements CommandLineRunner {
 
-  private final JsonProcessorUtil jsonProcessorUtil;
   private final RoleService roleService;
   private final UserService userService;
 
   @Override
-  public void run(String... args) throws Exception {
+  public void run(String... args) {
     createDummyData();
   }
 
-  private void createDummyData() throws Exception {
+  private void createDummyData() {
     RoleDto role1 = new RoleDto();
     role1.setAuthority("ADMIN");
     role1 = roleService.createRole(role1);
