@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UserService {
 
   private final UserRepository repository;
   private final UserMapper mapper;
+  private final PasswordEncoder passwordEncoder;
 
   public List<UserDto> getUsers() {
     return repository.findAll().stream().map(mapper::toDto).toList();
@@ -31,16 +33,17 @@ public class UserService {
     return repository.findByUsernameAndIsEnabledTrue(username);
   }
 
-  public UserDto createUser(UserDto roleDto) {
-    return mapper.toDto(repository.save(mapper.toEntity(roleDto)));
+  public UserDto createUser(UserDto dto) {
+    dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+    return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }
 
-  public UserDto updateUser(UserDto roleDto) {
-    var existing = getById(roleDto.getId());
+  public UserDto updateUser(UserDto dto) {
+    var existing = getById(dto.getId());
     if (existing.isEmpty()) {
       throw new EntityNotFoundException();
     }
-    mapper.updatePartial(existing.get(), roleDto);
+    mapper.updatePartial(existing.get(), dto);
     return mapper.toDto(repository.save(existing.get()));
   }
 }

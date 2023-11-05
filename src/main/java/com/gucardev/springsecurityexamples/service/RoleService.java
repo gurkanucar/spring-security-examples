@@ -27,16 +27,16 @@ public class RoleService {
     return repository.findById(id);
   }
 
-  public RoleDto createRole(RoleDto roleDto) {
-    return mapper.toDto(repository.save(mapper.toEntity(roleDto)));
+  public RoleDto createRole(RoleDto dto) {
+    return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }
 
-  public RoleDto updateRole(RoleDto roleDto) {
-    var existing = getById(roleDto.getId());
+  public RoleDto updateRole(RoleDto dto) {
+    var existing = getById(dto.getId());
     if (existing.isEmpty()) {
       throw new EntityNotFoundException();
     }
-    mapper.updatePartial(existing.get(), roleDto);
+    mapper.updatePartial(existing.get(), dto);
     return mapper.toDto(repository.save(existing.get()));
   }
 }
