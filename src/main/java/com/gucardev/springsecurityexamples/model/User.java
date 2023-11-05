@@ -38,7 +38,7 @@ public class User extends BaseEntity implements UserDetails {
   private boolean credentialsNonExpired;
 
   @ElementCollection(targetClass = Role.class)
-  @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "id"))
+  @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
   private Set<Role> authorities;
