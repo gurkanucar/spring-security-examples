@@ -3,6 +3,7 @@ package com.gucardev.springsecurityexamples.controller;
 import com.gucardev.springsecurityexamples.dto.LoginRequest;
 import com.gucardev.springsecurityexamples.dto.TokenDto;
 import com.gucardev.springsecurityexamples.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/login")
-  public ResponseEntity<TokenDto> login(@RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequest loginRequest) {
     return ResponseEntity.ok().body(authService.login(loginRequest));
   }
 }
