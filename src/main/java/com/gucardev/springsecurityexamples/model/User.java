@@ -37,10 +37,9 @@ public class User extends BaseEntity implements UserDetails {
   @Column(name = "credentials_non_expired", columnDefinition = "boolean default true")
   private boolean credentialsNonExpired;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  @ElementCollection(targetClass = Role.class)
+  @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "id"))
+  @Column(name = "role", nullable = false)
+  @Enumerated(EnumType.STRING)
   private Set<Role> authorities;
 }

@@ -1,13 +1,15 @@
 package com.gucardev.springsecurityexamples.dto;
 
+import com.gucardev.springsecurityexamples.model.Role;
 import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import com.gucardev.springsecurityexamples.validation.UpdateValidationGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,5 +35,5 @@ public class UserDto extends BaseDto {
 
   private Boolean credentialsNonExpired;
 
-  private Set<RoleDto> authorities;
+  private Set<Role> authorities;
 }

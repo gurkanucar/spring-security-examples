@@ -1,8 +1,7 @@
 package com.gucardev.springsecurityexamples;
 
-import com.gucardev.springsecurityexamples.dto.RoleDto;
 import com.gucardev.springsecurityexamples.dto.UserDto;
-import com.gucardev.springsecurityexamples.service.RoleService;
+import com.gucardev.springsecurityexamples.model.Role;
 import com.gucardev.springsecurityexamples.service.UserService;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Startup implements CommandLineRunner {
 
-  private final RoleService roleService;
   private final UserService userService;
 
   @Override
@@ -22,37 +20,26 @@ public class Startup implements CommandLineRunner {
   }
 
   private void createDummyData() {
-    RoleDto role1 = new RoleDto();
-    role1.setAuthority("ADMIN");
-    role1 = roleService.createRole(role1);
-
-    RoleDto role2 = new RoleDto();
-    role2.setAuthority("USER");
-    role2 = roleService.createRole(role2);
-
-    RoleDto role3 = new RoleDto();
-    role3.setAuthority("MODERATOR");
-    role3 = roleService.createRole(role3);
 
     UserDto userDto1 = new UserDto();
     userDto1.setName("user1");
     userDto1.setUsername("user1");
     userDto1.setPassword("pass");
-    userDto1.setAuthorities(Set.of(role1, role3));
+    userDto1.setAuthorities(Set.of(Role.ADMIN, Role.MOD));
     userService.createUser(userDto1);
 
     UserDto userDto2 = new UserDto();
     userDto2.setName("user2");
     userDto2.setUsername("user2");
     userDto2.setPassword("pass");
-    userDto2.setAuthorities(Set.of(role1, role3));
+    userDto2.setAuthorities(Set.of(Role.MOD));
     userService.createUser(userDto2);
 
     UserDto userDto3 = new UserDto();
     userDto3.setName("user3");
     userDto3.setUsername("user3");
     userDto3.setPassword("pass");
-    userDto3.setAuthorities(Set.of(role2));
+    userDto3.setAuthorities(Set.of(Role.USER));
     userService.createUser(userDto3);
   }
 }
