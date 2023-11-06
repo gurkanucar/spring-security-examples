@@ -39,6 +39,12 @@ public class JwtFilter extends OncePerRequestFilter {
       return;
     }
     jwt = header.substring(7);
+
+    if (tokenService.findInvalidatedTokenByValue(jwt).isPresent()) {
+      sendError(response, new Exception("token is not valid!"));
+      return;
+    }
+
     DecodedJWT decodedJWT;
     String username;
     try {

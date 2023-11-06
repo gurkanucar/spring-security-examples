@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,16 @@ public class TokenService {
 
   private final TokenRepository tokenRepository;
   private final UserService userService;
+
   @Value("${jwt-variables.KEY}")
   private String jwtKey;
+
   @Value("${jwt-variables.ISSUER}")
   private String jwtIssuer;
+
   @Value("${jwt-variables.EXPIRES_ACCESS_TOKEN_MINUTE}")
   private long accessTokenExpiryDuration;
+
   @Value("${jwt-variables.EXPIRES_REFRESH_TOKEN_MINUTE}")
   private long refreshTokenExpiryDuration;
 
@@ -97,5 +102,21 @@ public class TokenService {
     if (token.getExpiryDate().isBefore(Instant.now())) {
       throw new RuntimeException("Token has expired and cannot be used!");
     }
+  }
+
+  public Optional<Token> findInvalidatedTokenByValue(String token) {
+    return tokenRepository.findTokenByTokenAndValidFalse(token);
+  }
+
+  public void invalidateToken(String tokenValue) {
+    var existingToken = tokenRepository.findTokenByTokenAndValidFalse(tokenValue);
+    if (existingToken.isPresent()) {
+      throw new EntityNotFoundException("token already invalidated!");
+    }
+    Token token = new Token();
+    token.setUsername(JWT.decode(tokenValue).getSubject());
+    token.setValid(false);
+    token.setToken(tokenValue);
+    tokenRepository.save(token);
   }
 }

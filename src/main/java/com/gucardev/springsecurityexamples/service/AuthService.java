@@ -3,8 +3,10 @@ package com.gucardev.springsecurityexamples.service;
 import com.gucardev.springsecurityexamples.dto.LoginRequest;
 import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
 import com.gucardev.springsecurityexamples.dto.TokenDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -30,5 +32,14 @@ public class AuthService {
 
   public TokenDto refreshToken(RefreshTokenRequest refreshTokenRequest) {
     return tokenService.generateTokenPairsViaRefreshToken(refreshTokenRequest.getRefreshToken());
+  }
+
+  public void logout(HttpServletRequest httpRequest) {
+    String header = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+    if (header == null || !header.startsWith("Bearer ")) {
+      throw new RuntimeException("logout is not successful!");
+    }
+    var jwt = header.substring(7);
+    tokenService.invalidateToken(jwt);
   }
 }

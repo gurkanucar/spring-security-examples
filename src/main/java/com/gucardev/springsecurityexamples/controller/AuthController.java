@@ -4,6 +4,7 @@ import com.gucardev.springsecurityexamples.dto.LoginRequest;
 import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
 import com.gucardev.springsecurityexamples.dto.TokenDto;
 import com.gucardev.springsecurityexamples.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequest loginRequest) {
     return ResponseEntity.ok().body(authService.login(loginRequest));
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<TokenDto> logout(HttpServletRequest httpRequest) {
+    authService.logout(httpRequest);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/refresh-token")
