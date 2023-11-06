@@ -42,6 +42,10 @@ public class UserService {
   }
 
   public UserDto createUser(UserDto dto) {
+    if (repository.existsByUsername(dto.getUsername())
+        || repository.existsByEmail(dto.getEmail())) {
+      throw new RuntimeException("user is already exists!");
+    }
     dto.setPassword(passwordEncoder.encode(dto.getPassword()));
     return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }
