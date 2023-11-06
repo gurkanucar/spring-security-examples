@@ -51,7 +51,6 @@ public class TokenService {
     }
     verifyRefreshToken(existingRefreshToken.get());
     tokenRepository.delete(existingRefreshToken.get());
-
     var user = userService.getDtoByUsername(existingRefreshToken.get().getUsername());
     return getTokenDto(user.getUsername(), user);
   }
@@ -88,21 +87,19 @@ public class TokenService {
   }
 
   public String generateRefreshToken(String username) {
+    Instant expirationTime = Instant.now().plus(Duration.ofMinutes(refreshTokenExpiryDuration));
     Token refreshToken = new Token();
     refreshToken.setUsername(username);
     refreshToken.setValid(true);
-    refreshToken.setExpiryDate(
-        Instant.ofEpochSecond(
-            System.currentTimeMillis()
-                + Duration.ofMinutes(refreshTokenExpiryDuration).toMillis()));
+    refreshToken.setExpiryDate(expirationTime);
     refreshToken.setToken(UUID.randomUUID().toString());
     refreshToken = tokenRepository.save(refreshToken);
     return refreshToken.getToken();
   }
 
   public void verifyRefreshToken(Token token) {
-    if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
-      throw new RuntimeException("token could not verify!");
+    if (token.getExpiryDate().isBefore(Instant.now())) {
+      throw new RuntimeException("Token has expired and cannot be used!");
     }
   }
 }
