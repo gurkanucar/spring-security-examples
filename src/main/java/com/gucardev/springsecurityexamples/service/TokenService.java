@@ -24,24 +24,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
+  private final TokenRepository tokenRepository;
+  private final UserService userService;
   @Value("${jwt-variables.KEY}")
   private String jwtKey;
-
   @Value("${jwt-variables.ISSUER}")
   private String jwtIssuer;
-
   @Value("${jwt-variables.EXPIRES_ACCESS_TOKEN_MINUTE}")
   private long accessTokenExpiryDuration;
-
   @Value("${jwt-variables.EXPIRES_REFRESH_TOKEN_MINUTE}")
   private long refreshTokenExpiryDuration;
 
-  private final TokenRepository tokenRepository;
-  private final UserService userService;
-
   public TokenDto generateTokenPairs(String username) {
     var user = userService.getDtoByUsername(username);
-    return getTokenDto(username, user);
+    return getTokenDto(user);
   }
 
   public TokenDto generateTokenPairsViaRefreshToken(String refreshTokenValue) {
@@ -52,16 +48,16 @@ public class TokenService {
     verifyRefreshToken(existingRefreshToken.get());
     tokenRepository.delete(existingRefreshToken.get());
     var user = userService.getDtoByUsername(existingRefreshToken.get().getUsername());
-    return getTokenDto(user.getUsername(), user);
+    return getTokenDto(user);
   }
 
-  private TokenDto getTokenDto(String user, UserDto user1) {
-    var accessToken = generateAccessToken(user);
-    var refreshToken = generateRefreshToken(user);
+  private TokenDto getTokenDto(UserDto user) {
+    var accessToken = generateAccessToken(user.getUsername());
+    var refreshToken = generateRefreshToken(user.getUsername());
     return TokenDto.builder()
         .refreshToken(refreshToken)
         .accessToken(accessToken)
-        .user(user1)
+        .user(user)
         .build();
   }
 
