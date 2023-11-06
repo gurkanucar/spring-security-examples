@@ -1,9 +1,9 @@
 package com.gucardev.springsecurityexamples.service;
 
 import com.gucardev.springsecurityexamples.dto.LoginRequest;
+import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
 import com.gucardev.springsecurityexamples.dto.TokenDto;
 import com.gucardev.springsecurityexamples.mapper.UserMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,19 +22,16 @@ public class AuthService {
 
   public TokenDto login(LoginRequest loginRequest) {
     try {
-      var user =
-          userService
-              .getByUsername(loginRequest.getUsername())
-              .orElseThrow(() -> new EntityNotFoundException("user not found!"));
       authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(
               loginRequest.getUsername(), loginRequest.getPassword()));
-      return TokenDto.builder()
-          .accessToken(tokenService.generateToken(loginRequest.getUsername()))
-          .user(userMapper.toDto(user))
-          .build();
+      return tokenService.generateTokenPairs(loginRequest.getUsername());
     } catch (Exception e) {
       throw new RuntimeException();
     }
+  }
+
+  public TokenDto refreshToken(RefreshTokenRequest refreshTokenRequest) {
+    return tokenService.generateTokenPairsViaRefreshToken(refreshTokenRequest.getRefreshToken());
   }
 }

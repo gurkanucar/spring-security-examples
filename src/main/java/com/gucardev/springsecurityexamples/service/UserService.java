@@ -29,8 +29,16 @@ public class UserService {
     return repository.findById(id);
   }
 
-  public Optional<User> getByUsername(String username) {
-    return repository.findByUsernameAndIsEnabledTrue(username);
+  public User getByUsername(String username) {
+    var user = repository.findByUsernameAndIsEnabledTrue(username);
+    if (user.isEmpty()) {
+      throw new EntityNotFoundException("user not found!");
+    }
+    return user.get();
+  }
+
+  public UserDto getDtoByUsername(String username) {
+    return mapper.toDto(getByUsername(username));
   }
 
   public UserDto createUser(UserDto dto) {
