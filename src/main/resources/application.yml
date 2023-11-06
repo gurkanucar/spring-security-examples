@@ -19,6 +19,5 @@ spring:
 
 jwt-variables:
   EXPIRES_ACCESS_TOKEN_MINUTE: 1
-  EXPIRES_REFRESH_TOKEN_MINUTE: 1
   ISSUER: dev
   KEY: asdqwe123+K3Y
