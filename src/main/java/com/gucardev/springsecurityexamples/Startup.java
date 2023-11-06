@@ -37,6 +37,7 @@ public class Startup implements CommandLineRunner {
     UserDto admin = new UserDto();
     admin.setName("admin");
     admin.setUsername("admin");
+    admin.setEmail("admin@mail.com");
     admin.setPassword("pass");
     admin.setEnabled(true);
     admin.setCredentialsNonExpired(true);
@@ -48,6 +49,7 @@ public class Startup implements CommandLineRunner {
     UserDto user = new UserDto();
     user.setName("user");
     user.setUsername("user");
+    user.setEmail("user@mail.com");
     user.setPassword("pass");
     user.setEnabled(true);
     user.setCredentialsNonExpired(true);
@@ -59,6 +61,7 @@ public class Startup implements CommandLineRunner {
     UserDto user2 = new UserDto();
     user2.setName("user2");
     user2.setUsername("user2");
+    user2.setEmail("user2@mail.com");
     user2.setPassword("pass");
     user2.setAuthorities(Set.of(userRole));
     userService.createUser(user2);
@@ -66,6 +69,7 @@ public class Startup implements CommandLineRunner {
     UserDto mod = new UserDto();
     mod.setName("mod");
     mod.setUsername("mod");
+    mod.setEmail("mod@mail.com");
     mod.setPassword("pass");
     mod.setEnabled(true);
     mod.setCredentialsNonExpired(true);

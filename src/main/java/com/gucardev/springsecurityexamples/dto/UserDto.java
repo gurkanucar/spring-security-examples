@@ -21,6 +21,8 @@ public class UserDto extends BaseDto {
 
   private String username;
 
+  private String email;
+
   @NotNull(groups = {CreateValidationGroup.class})
   @Null(groups = {UpdateValidationGroup.class})
   private String password;
