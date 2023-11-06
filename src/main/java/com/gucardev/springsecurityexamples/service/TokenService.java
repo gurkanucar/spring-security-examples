@@ -39,10 +39,7 @@ public class TokenService {
 
   public DecodedJWT verifyJWT(String token) {
     Algorithm algorithm = Algorithm.HMAC256(jwtKey.getBytes(StandardCharsets.UTF_8));
-    JWTVerifier verifier =
-        JWT.require(algorithm)
-            .acceptExpiresAt(Duration.ofMinutes(accessTokenExpiryDuration).toMillis())
-            .build();
+    JWTVerifier verifier = JWT.require(algorithm).build();
     try {
       return verifier.verify(token);
     } catch (Exception e) {
