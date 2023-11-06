@@ -1,6 +1,7 @@
 package com.gucardev.springsecurityexamples.controller;
 
 import com.gucardev.springsecurityexamples.dto.LoginRequest;
+import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
 import com.gucardev.springsecurityexamples.dto.TokenDto;
 import com.gucardev.springsecurityexamples.service.AuthService;
 import jakarta.validation.Valid;
@@ -21,5 +22,11 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequest loginRequest) {
     return ResponseEntity.ok().body(authService.login(loginRequest));
+  }
+
+  @PostMapping("/refresh-token")
+  public ResponseEntity<TokenDto> refreshToken(
+      @Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+    return ResponseEntity.ok().body(authService.refreshToken(refreshTokenRequest));
   }
 }
