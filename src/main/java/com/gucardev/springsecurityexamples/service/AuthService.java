@@ -1,9 +1,6 @@
 package com.gucardev.springsecurityexamples.service;
 
-import com.gucardev.springsecurityexamples.dto.LoginRequest;
-import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
-import com.gucardev.springsecurityexamples.dto.TokenDto;
-import com.gucardev.springsecurityexamples.dto.UserDto;
+import com.gucardev.springsecurityexamples.dto.*;
 import com.gucardev.springsecurityexamples.event.UserRegisterEvent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
+  private final OTPService otpService;
   private final ApplicationEventPublisher eventPublisher;
   private final UserService userService;
   private final TokenService tokenService;
@@ -51,5 +49,17 @@ public class AuthService {
   public void register(UserDto userDto) {
     var user = userService.createUser(userDto);
     eventPublisher.publishEvent(new UserRegisterEvent(this, user));
+  }
+
+  public void activateAccount(OTPActivateRequest otpActivateRequest) {
+    var otpVerified =
+        otpService.verifyOTPForAccountActivate(
+            otpActivateRequest.getUsername(), otpActivateRequest.getCode());
+    if (!otpVerified) {
+      throw new RuntimeException("OTP could not verify!");
+    }
+    var user = userService.getDtoByUsername(otpActivateRequest.getUsername());
+    user.setEnabled(true);
+    userService.updateUser(user);
   }
 }

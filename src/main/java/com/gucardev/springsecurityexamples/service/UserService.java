@@ -38,7 +38,11 @@ public class UserService {
   }
 
   public UserDto getDtoByUsername(String username) {
-    return mapper.toDto(getByUsername(username));
+    var user = repository.findByUsername(username);
+    if (user.isEmpty()) {
+      throw new EntityNotFoundException("user not found!");
+    }
+    return mapper.toDto(user.get());
   }
 
   public UserDto createUser(UserDto dto) {
@@ -46,6 +50,9 @@ public class UserService {
         || repository.existsByEmail(dto.getEmail())) {
       throw new RuntimeException("user is already exists!");
     }
+    dto.setCredentialsNonExpired(true);
+    dto.setAccountNonExpired(true);
+    dto.setAccountNonLocked(true);
     dto.setPassword(passwordEncoder.encode(dto.getPassword()));
     return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }

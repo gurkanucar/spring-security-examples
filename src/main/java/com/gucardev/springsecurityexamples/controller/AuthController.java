@@ -1,9 +1,6 @@
 package com.gucardev.springsecurityexamples.controller;
 
-import com.gucardev.springsecurityexamples.dto.LoginRequest;
-import com.gucardev.springsecurityexamples.dto.RefreshTokenRequest;
-import com.gucardev.springsecurityexamples.dto.TokenDto;
-import com.gucardev.springsecurityexamples.dto.UserDto;
+import com.gucardev.springsecurityexamples.dto.*;
 import com.gucardev.springsecurityexamples.service.AuthService;
 import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +21,7 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/register")
-  public ResponseEntity<TokenDto> register(@Validated(CreateValidationGroup.class) @RequestBody UserDto userDto) {
+  public ResponseEntity<Void> register(@Validated(CreateValidationGroup.class) @RequestBody UserDto userDto) {
     authService.register(userDto);
     return ResponseEntity.ok().build();
   }
@@ -45,4 +42,12 @@ public class AuthController {
       @Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
     return ResponseEntity.ok().body(authService.refreshToken(refreshTokenRequest));
   }
+
+
+  @PostMapping("/activate-account")
+  public ResponseEntity<Void> activateAccount(@Valid @RequestBody OTPActivateRequest otpActivateRequest) {
+    authService.activateAccount(otpActivateRequest);
+    return ResponseEntity.ok().build();
+  }
+
 }
