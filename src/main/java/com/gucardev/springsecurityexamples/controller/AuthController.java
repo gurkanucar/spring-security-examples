@@ -44,10 +44,10 @@ public class AuthController {
     return ResponseEntity.ok().body(authService.refreshToken(refreshTokenRequest));
   }
 
-  @PostMapping("/reset-password")
-  public ResponseEntity<Void> resetPassword(
-      @Valid @RequestBody PasswordResetRequest passwordResetRequest) {
-    authService.resetPasswordRequest(passwordResetRequest);
+  @PostMapping("/forget-password")
+  public ResponseEntity<Void> forgetPassword(
+      @Valid @RequestBody PasswordForgetRequest passwordForgetRequest) {
+    authService.resetPasswordRequest(passwordForgetRequest);
     return ResponseEntity.ok().build();
   }
 

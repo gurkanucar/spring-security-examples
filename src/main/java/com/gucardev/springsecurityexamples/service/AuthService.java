@@ -64,8 +64,8 @@ public class AuthService {
     userService.updateUser(user);
   }
 
-  public void resetPasswordRequest(PasswordResetRequest passwordResetRequest) {
-    var user = userService.getDtoByEmail(passwordResetRequest.getEmail());
+  public void resetPasswordRequest(PasswordForgetRequest passwordForgetRequest) {
+    var user = userService.getDtoByEmail(passwordForgetRequest.getEmail());
     var otp = otpService.createOTPForPasswordReset(user.getUsername());
     log.info(passwordResetUrl.formatted(otp.getUsername(), otp.getCode()));
   }
