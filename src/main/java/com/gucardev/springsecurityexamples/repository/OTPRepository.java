@@ -11,6 +11,8 @@ public interface OTPRepository extends JpaRepository<OTP, Long> {
 
   Optional<OTP> findByCode(String code);
 
+  void deleteByCodeAndUsername(String code, String username);
+
   Optional<OTP> findByCodeAndUsernameAndOtpTypeOrderByCreatedDateTimeDesc(
       String code, String username, OTPType otpType);
 

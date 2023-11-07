@@ -51,14 +51,9 @@ public class AuthService {
     eventPublisher.publishEvent(new UserRegisterEvent(this, user));
   }
 
-  public void activateAccount(OTPActivateRequest otpActivateRequest) {
-    var otpVerified =
-        otpService.verifyOTPForAccountActivate(
-            otpActivateRequest.getUsername(), otpActivateRequest.getCode());
-    if (!otpVerified) {
-      throw new RuntimeException("OTP could not verify!");
-    }
-    var user = userService.getDtoByUsername(otpActivateRequest.getUsername());
+  public void activateAccount(String username, String code) {
+    otpService.verifyOTPForAccountActivate(username, code);
+    var user = userService.getDtoByUsername(username);
     user.setEnabled(true);
     userService.updateUser(user);
   }

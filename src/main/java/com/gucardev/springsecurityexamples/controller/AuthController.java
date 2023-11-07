@@ -7,11 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,7 +20,8 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/register")
-  public ResponseEntity<Void> register(@Validated(CreateValidationGroup.class) @RequestBody UserDto userDto) {
+  public ResponseEntity<Void> register(
+      @Validated(CreateValidationGroup.class) @RequestBody UserDto userDto) {
     authService.register(userDto);
     return ResponseEntity.ok().build();
   }
@@ -43,11 +43,20 @@ public class AuthController {
     return ResponseEntity.ok().body(authService.refreshToken(refreshTokenRequest));
   }
 
-
-  @PostMapping("/activate-account")
-  public ResponseEntity<Void> activateAccount(@Valid @RequestBody OTPActivateRequest otpActivateRequest) {
-    authService.activateAccount(otpActivateRequest);
-    return ResponseEntity.ok().build();
+  @RequestMapping("/activate-account")
+  public ModelAndView activateAccount(
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "username", required = false) String username,
+      Model model) {
+    ModelAndView mav;
+    try {
+      mav = new ModelAndView("activationSuccess.html");
+      authService.activateAccount(username, code);
+      return mav;
+    } catch (Exception e) {
+      mav = new ModelAndView("activationError");
+      model.addAttribute("error", "Error activating the account: " + e.getMessage());
+      return mav;
+    }
   }
-
 }

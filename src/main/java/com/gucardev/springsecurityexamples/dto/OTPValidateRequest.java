@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OTPActivateRequest {
+public class OTPValidateRequest {
 
   private String username;
   private String code;
