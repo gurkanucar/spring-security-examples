@@ -54,7 +54,7 @@ public class AuthController {
   @PostMapping("/set-new-password")
   public ResponseEntity<Void> setNewPassword(
       @Valid @RequestBody SetNewPasswordRequest setNewPasswordRequest) {
-    log.info(setNewPasswordRequest.toString());
+    authService.setNewPassword(setNewPasswordRequest);
     return ResponseEntity.ok().build();
   }
 

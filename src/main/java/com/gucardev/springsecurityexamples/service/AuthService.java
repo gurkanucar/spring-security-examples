@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,7 @@ public class AuthService {
   private final UserService userService;
   private final TokenService tokenService;
   private final AuthenticationManager authenticationManager;
+  private final PasswordEncoder passwordEncoder;
 
   public TokenDto login(LoginRequest loginRequest) {
     try {
@@ -66,5 +68,13 @@ public class AuthService {
     var user = userService.getDtoByEmail(passwordResetRequest.getEmail());
     var otp = otpService.createOTPForPasswordReset(user.getUsername());
     log.info(passwordResetUrl.formatted(otp.getUsername(), otp.getCode()));
+  }
+
+  public void setNewPassword(SetNewPasswordRequest setNewPasswordRequest) {
+    otpService.verifyOTPForPasswordReset(
+        setNewPasswordRequest.getUsername(), setNewPasswordRequest.getCode());
+    var user = userService.getDtoByUsername(setNewPasswordRequest.getUsername());
+    user.setPassword(passwordEncoder.encode(setNewPasswordRequest.getPassword()));
+    userService.updateUser(user);
   }
 }
