@@ -6,8 +6,8 @@ import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
   private final AuthService authService;
@@ -43,20 +44,43 @@ public class AuthController {
     return ResponseEntity.ok().body(authService.refreshToken(refreshTokenRequest));
   }
 
+  @PostMapping("/reset-password")
+  public ResponseEntity<Void> resetPassword(
+      @Valid @RequestBody PasswordResetRequest passwordResetRequest) {
+    authService.resetPasswordRequest(passwordResetRequest);
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/set-new-password")
+  public ResponseEntity<Void> setNewPassword(
+      @Valid @RequestBody SetNewPasswordRequest setNewPasswordRequest) {
+    log.info(setNewPasswordRequest.toString());
+    return ResponseEntity.ok().build();
+  }
+
   @RequestMapping("/activate-account")
   public ModelAndView activateAccount(
       @RequestParam(name = "code", required = false) String code,
-      @RequestParam(name = "username", required = false) String username,
-      Model model) {
+      @RequestParam(name = "username", required = false) String username) {
     ModelAndView mav;
     try {
-      mav = new ModelAndView("activationSuccess.html");
+      mav = new ModelAndView("activationSuccess");
       authService.activateAccount(username, code);
       return mav;
     } catch (Exception e) {
       mav = new ModelAndView("activationError");
-      model.addAttribute("error", "Error activating the account: " + e.getMessage());
+      mav.addObject("error", "Error activating the account: " + e.getMessage());
       return mav;
     }
+  }
+
+  @RequestMapping("/set-new-password/ui")
+  public ModelAndView showResetForm(
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "username", required = false) String username) {
+    ModelAndView mav = new ModelAndView("resetPassword");
+    mav.addObject("username", username);
+    mav.addObject("code", code);
+    return mav;
   }
 }

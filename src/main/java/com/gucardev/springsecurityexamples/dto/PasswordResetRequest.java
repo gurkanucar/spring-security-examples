@@ -5,8 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OTPValidateRequest {
-
-  private String username;
-  private String code;
+public class PasswordResetRequest {
+  private String email;
 }

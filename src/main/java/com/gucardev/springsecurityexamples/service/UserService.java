@@ -45,6 +45,14 @@ public class UserService {
     return mapper.toDto(user.get());
   }
 
+  public UserDto getDtoByEmail(String email) {
+    var user = repository.findByEmail(email);
+    if (user.isEmpty()) {
+      throw new EntityNotFoundException("user not found!");
+    }
+    return mapper.toDto(user.get());
+  }
+
   public UserDto createUser(UserDto dto) {
     if (repository.existsByUsername(dto.getUsername())
         || repository.existsByEmail(dto.getEmail())) {

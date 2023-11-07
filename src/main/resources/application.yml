@@ -30,3 +30,4 @@ otp-variables:
 application-details:
   base-context: http://localhost:8080
   account-activate-url: ${application-details.base-context}/auth/activate-account?username=%s&code=%s
+  password-reset-url: ${application-details.base-context}/auth/set-new-password/ui?username=%s&code=%s

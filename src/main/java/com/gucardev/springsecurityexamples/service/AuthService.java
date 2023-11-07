@@ -5,6 +5,7 @@ import com.gucardev.springsecurityexamples.event.UserRegisterEvent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthService {
+
+  @Value("${application-details.password-reset-url}")
+  private String passwordResetUrl;
 
   private final OTPService otpService;
   private final ApplicationEventPublisher eventPublisher;
@@ -56,5 +60,11 @@ public class AuthService {
     var user = userService.getDtoByUsername(username);
     user.setEnabled(true);
     userService.updateUser(user);
+  }
+
+  public void resetPasswordRequest(PasswordResetRequest passwordResetRequest) {
+    var user = userService.getDtoByEmail(passwordResetRequest.getEmail());
+    var otp = otpService.createOTPForPasswordReset(user.getUsername());
+    log.info(passwordResetUrl.formatted(otp.getUsername(), otp.getCode()));
   }
 }

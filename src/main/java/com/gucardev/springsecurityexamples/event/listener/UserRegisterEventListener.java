@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserRegisterEventListener implements ApplicationListener<UserRegisterEvent> {
 
   private final OTPService otpService;
+
   @Value("${application-details.account-activate-url}")
   private String accountActivateUrl;
 
