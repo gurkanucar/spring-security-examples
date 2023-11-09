@@ -28,7 +28,11 @@ public class SecurityConfig {
 
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/public/**"));
+    return (web) ->
+        web.ignoring()
+            .requestMatchers(
+                new AntPathRequestMatcher("/auth/**"),
+                new AntPathRequestMatcher("/public/**"));
   }
 
   @Bean

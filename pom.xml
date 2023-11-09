@@ -36,10 +36,10 @@
         </dependency>
 
         <!-- Data JPA: for persistence layer and Spring Data JPA repositories -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Security: to add security (authentication and authorization) to your application -->
         <dependency>
@@ -53,19 +53,19 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- H2: in-memory database used for development -->
+<!--         H2: in-memory database used for development -->
 <!--        <dependency>-->
 <!--            <groupId>com.h2database</groupId>-->
 <!--            <artifactId>h2</artifactId>-->
 <!--            <scope>runtime</scope>-->
 <!--        </dependency>-->
 
-        <!-- PostgreSql -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+<!--        &lt;!&ndash; PostgreSql &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
 
         <!-- Lombok: for generating getters, setters, and other utility methods using annotations -->
         <dependency>
