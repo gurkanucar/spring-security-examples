@@ -17,3 +17,6 @@
 [jwt-with-refresh-token](https://github.com/gurkanucar/spring-security-examples/tree/jwt-with-refresh-token)
 
 [jwt-and-otp](https://github.com/gurkanucar/spring-security-examples/tree/jwt-and-otp)
+
+[jwt-and-oauth2-together](https://github.com/gurkanucar/spring-security-examples/tree/jwt-and-oauth2-social-login)
+
