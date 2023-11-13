@@ -11,4 +11,8 @@ public class HomeController {
   public ModelAndView indexHtml() {
     return new ModelAndView("index");
   }
+  @RequestMapping("/callback")
+  public ModelAndView callBack() {
+    return new ModelAndView("callBack");
+  }
 }

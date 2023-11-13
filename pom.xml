@@ -27,6 +27,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- oauth2 for social login -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
 
         <!-- Spring Boot Starter tomcat server -->
         <dependency>

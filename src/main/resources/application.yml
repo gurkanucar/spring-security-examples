@@ -16,6 +16,19 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${GITHUB_CLIENT_ID}
+            clientSecret: ${GITHUB_CLIENT_SECRET}
+            scope: read:user, user:email
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET}
+            scope: profile, email
+
 
 jwt-variables:
   EXPIRES_ACCESS_TOKEN_MINUTE: 1
