@@ -31,7 +31,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
       HttpServletRequest request, HttpServletResponse response, Authentication authentication)
       throws IOException {
     //        String targetUrl = "http://localhost:3000/oauth2/redirect";
-    String targetUrl = "http://localhost:8080/oauth2/redirect";
+    String targetUrl = "http://localhost:8080/oauth2/redirect-success";
     CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
     String token = tokenService.generateAccessToken(user.getUsername());
     targetUrl =
