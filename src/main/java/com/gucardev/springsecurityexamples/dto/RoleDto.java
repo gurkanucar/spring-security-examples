@@ -15,5 +15,5 @@ public class RoleDto extends BaseDto {
   @NotNull(groups = {UpdateValidationGroup.class})
   private Long id;
 
-  private String authority;
+  private String name;
 }
