@@ -35,5 +35,5 @@ public class UserDto extends BaseDto {
 
   private boolean credentialsNonExpired;
 
-  private Set<RoleDto> authorities;
+  private Set<RoleDto> roles;
 }

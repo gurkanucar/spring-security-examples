@@ -1,9 +1,11 @@
 package com.gucardev.springsecurityexamples.model;
 
 import jakarta.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -45,5 +47,10 @@ public class User extends BaseEntity implements UserDetails {
       name = "user_role",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  private Set<Role> authorities;
+  private Set<Role> roles;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.roles;
+  }
 }

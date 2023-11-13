@@ -23,59 +23,59 @@ public class Startup implements CommandLineRunner {
 
   private void createDummyData() {
     RoleDto adminRole = new RoleDto();
-    adminRole.setAuthority("ADMIN");
+    adminRole.setName("ADMIN");
     adminRole = roleService.createRole(adminRole);
 
     RoleDto userRole = new RoleDto();
-    userRole.setAuthority("USER");
+    userRole.setName("USER");
     userRole = roleService.createRole(userRole);
 
     RoleDto modRole = new RoleDto();
-    modRole.setAuthority("MODERATOR");
+    modRole.setName("MODERATOR");
     modRole = roleService.createRole(modRole);
 
     UserDto admin = new UserDto();
     admin.setName("admin");
     admin.setUsername("admin");
-    admin.setEmail("admin@mail.com");
     admin.setPassword("pass");
+    admin.setEmail("admin@mail.com");
     admin.setEnabled(true);
     admin.setCredentialsNonExpired(true);
     admin.setAccountNonExpired(true);
     admin.setAccountNonLocked(true);
-    admin.setAuthorities(Set.of(adminRole, modRole));
+    admin.setRoles(Set.of(adminRole, modRole));
     userService.createUser(admin);
 
     UserDto user = new UserDto();
     user.setName("user");
     user.setUsername("user");
-    user.setEmail("user@mail.com");
     user.setPassword("pass");
+    user.setEmail("user@mail.com");
     user.setEnabled(true);
     user.setCredentialsNonExpired(true);
     user.setAccountNonExpired(true);
     user.setAccountNonLocked(true);
-    user.setAuthorities(Set.of(userRole));
+    user.setRoles(Set.of(userRole));
     userService.createUser(user);
 
     UserDto user2 = new UserDto();
     user2.setName("user2");
     user2.setUsername("user2");
-    user2.setEmail("user2@mail.com");
     user2.setPassword("pass");
-    user2.setAuthorities(Set.of(userRole));
+    user2.setEmail("user2@mail.com");
+    user2.setRoles(Set.of(userRole));
     userService.createUser(user2);
 
     UserDto mod = new UserDto();
     mod.setName("mod");
     mod.setUsername("mod");
-    mod.setEmail("mod@mail.com");
     mod.setPassword("pass");
+    mod.setEmail("mod@mail.com");
     mod.setEnabled(true);
     mod.setCredentialsNonExpired(true);
     mod.setAccountNonExpired(true);
     mod.setAccountNonLocked(true);
-    mod.setAuthorities(Set.of(modRole));
+    mod.setRoles(Set.of(modRole));
     userService.createUser(mod);
   }
 }
