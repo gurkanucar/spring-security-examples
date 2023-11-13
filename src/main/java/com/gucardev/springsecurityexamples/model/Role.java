@@ -18,13 +18,18 @@ public class Role extends BaseEntity implements GrantedAuthority {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "authority_name")
-  private String authority;
+  @Column(name = "role_name")
+  private String name;
 
   @ManyToMany(
-      fetch = FetchType.LAZY,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-      mappedBy = "authorities")
+          fetch = FetchType.LAZY,
+          cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+          mappedBy = "roles")
   @JsonIgnore
   private Set<User> users = new HashSet<>();
+
+  @Override
+  public String getAuthority() {
+    return this.name;
+  }
 }
