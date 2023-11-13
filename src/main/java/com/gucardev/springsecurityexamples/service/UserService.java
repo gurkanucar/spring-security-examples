@@ -6,6 +6,7 @@ import com.gucardev.springsecurityexamples.model.User;
 import com.gucardev.springsecurityexamples.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +62,9 @@ public class UserService {
     dto.setCredentialsNonExpired(true);
     dto.setAccountNonExpired(true);
     dto.setAccountNonLocked(true);
-    dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+    if (Objects.nonNull(dto.getPassword())) {
+      dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+    }
     return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }
 

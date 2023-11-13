@@ -1,5 +1,6 @@
 package com.gucardev.springsecurityexamples.dto;
 
+import com.gucardev.springsecurityexamples.model.OAuth2Provider;
 import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import com.gucardev.springsecurityexamples.validation.UpdateValidationGroup;
 import jakarta.persistence.*;
@@ -21,10 +22,12 @@ public class UserDto extends BaseDto {
 
   private String username;
 
+  private OAuth2Provider oAuth2Provider;
+
   private String email;
 
-  @NotNull(groups = {CreateValidationGroup.class})
-  @Null(groups = {UpdateValidationGroup.class})
+//  @NotNull(groups = {CreateValidationGroup.class})
+//  @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
   private boolean accountNonExpired;

@@ -11,7 +11,7 @@ public class HomeController {
   public ModelAndView indexHtml() {
     return new ModelAndView("index");
   }
-  @RequestMapping("/callback")
+  @RequestMapping("/oauth2/redirectCustom")
   public ModelAndView callBack() {
     return new ModelAndView("callBack");
   }

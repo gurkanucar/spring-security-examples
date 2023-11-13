@@ -27,8 +27,11 @@ public class User extends BaseEntity implements UserDetails {
   @Column(nullable = false)
   private String email;
 
-  @Column(nullable = false)
+  //  @Column(nullable = false)
   private String password;
+
+  @Enumerated(EnumType.STRING)
+  private OAuth2Provider oAuth2Provider;
 
   @Column(name = "account_non_expired", columnDefinition = "boolean default true")
   private boolean accountNonExpired;

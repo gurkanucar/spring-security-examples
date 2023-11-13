@@ -1,5 +1,6 @@
 package com.gucardev.springsecurityexamples.security;
 
+import com.gucardev.springsecurityexamples.security.oauth.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ public class SecurityConfig {
   private final JwtFilter jwtFilter;
   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
   private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
   @Bean
   public AuthenticationManager authenticationManager(
@@ -65,7 +67,12 @@ public class SecurityConfig {
                     .anyRequest()
                     .authenticated())
         .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-        .oauth2Login(x -> x.defaultSuccessUrl("/callback"))
+        .oauth2Login(
+            x -> {
+              x.defaultSuccessUrl("/oauth2/redirectCustom");
+              x.successHandler(customAuthenticationSuccessHandler);
+
+            })
         .httpBasic(Customizer.withDefaults())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
