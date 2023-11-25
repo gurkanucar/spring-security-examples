@@ -1,0 +1,33 @@
+#spring:
+#  datasource:
+#    password: 1234
+#    url: jdbc:postgresql://localhost:5432/spring_security_examples
+#    username: postgres
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:db
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+jwt-variables:
+  EXPIRES_ACCESS_TOKEN_MINUTE: 1
+  EXPIRES_REFRESH_TOKEN_MINUTE: 1
+  ISSUER: dev
+  KEY: asdqwe123+K3Y
+
+otp-variables:
+  EXPIRES_ACC_ACTIVATE_CODE_MINUTE: -1
+  EXPIRES_PASSWORD_RESET_CODE_MINUTE: 1
+
+application-details:
+  base-context: http://localhost:8080
+  account-activate-url: ${application-details.base-context}/auth/activate-account?username=%s&code=%s
+  password-reset-url: ${application-details.base-context}/auth/set-new-password/ui?username=%s&code=%s
