@@ -18,8 +18,8 @@ public class Role extends BaseEntity implements GrantedAuthority {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "authority_name")
-  private String authority;
+  @Column(name = "role_name")
+  private String name;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "role_endpoints", joinColumns = @JoinColumn(name = "role_id"))
@@ -29,7 +29,12 @@ public class Role extends BaseEntity implements GrantedAuthority {
   @ManyToMany(
       fetch = FetchType.LAZY,
       cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-      mappedBy = "authorities")
+      mappedBy = "roles")
   @JsonIgnore
   private Set<User> users = new HashSet<>();
+
+  @Override
+  public String getAuthority() {
+    return getName();
+  }
 }
