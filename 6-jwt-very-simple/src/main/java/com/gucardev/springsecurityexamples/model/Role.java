@@ -22,14 +22,14 @@ public class Role extends BaseEntity implements GrantedAuthority {
   private String name;
 
   @ManyToMany(
-      fetch = FetchType.LAZY,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-      mappedBy = "roles")
+          fetch = FetchType.LAZY,
+          cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+          mappedBy = "roles")
   @JsonIgnore
   private Set<User> users = new HashSet<>();
 
   @Override
   public String getAuthority() {
-    return this.name;
+    return getName();
   }
 }
