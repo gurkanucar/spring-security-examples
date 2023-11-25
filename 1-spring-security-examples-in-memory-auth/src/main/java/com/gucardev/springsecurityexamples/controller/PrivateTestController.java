@@ -15,7 +15,8 @@ public class PrivateTestController {
     return ResponseEntity.ok("Hello Any Authenticated! This is private endpoint");
   }
 
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  // @PreAuthorize("hasRole('ROLE_ADMIN')") // need ROLE_ prefix
+  @PreAuthorize("hasAuthority('create')")
   @GetMapping("/admin")
   public ResponseEntity<String> sayHelloToAdmin() {
     return ResponseEntity.ok("Hello Admin! This is private endpoint");

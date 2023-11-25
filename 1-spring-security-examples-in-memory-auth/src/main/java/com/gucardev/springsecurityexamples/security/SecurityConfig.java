@@ -31,8 +31,7 @@ public class SecurityConfig {
     return (web) ->
         web.ignoring()
             .requestMatchers(
-                new AntPathRequestMatcher("/auth/**"),
-                new AntPathRequestMatcher("/public/**"));
+                new AntPathRequestMatcher("/auth/**"), new AntPathRequestMatcher("/public/**"));
   }
 
   @Bean
@@ -50,6 +49,7 @@ public class SecurityConfig {
             .username("admin")
             .password(passwordEncoder.encode("pass"))
             .roles("USER", "ADMIN")
+            .authorities("create", "read")
             .build();
     UserDetails mod =
         User.builder()
