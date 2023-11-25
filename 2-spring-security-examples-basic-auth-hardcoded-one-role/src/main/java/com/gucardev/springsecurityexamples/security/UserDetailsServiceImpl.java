@@ -20,6 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     if (user.isEmpty()) {
       throw new EntityNotFoundException();
     }
-    return user.get();
+    return new CustomUserDetails(user.get());
   }
 }
