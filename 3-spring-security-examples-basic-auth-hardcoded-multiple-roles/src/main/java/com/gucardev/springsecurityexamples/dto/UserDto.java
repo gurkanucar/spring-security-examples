@@ -3,7 +3,6 @@ package com.gucardev.springsecurityexamples.dto;
 import com.gucardev.springsecurityexamples.model.Role;
 import com.gucardev.springsecurityexamples.validation.CreateValidationGroup;
 import com.gucardev.springsecurityexamples.validation.UpdateValidationGroup;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import java.util.Set;
@@ -26,13 +25,7 @@ public class UserDto extends BaseDto {
   @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
-  private boolean accountNonExpired;
-
   private boolean isEnabled;
 
-  private boolean accountNonLocked;
-
-  private boolean credentialsNonExpired;
-
-  private Set<Role> authorities;
+  private Set<Role> roles;
 }

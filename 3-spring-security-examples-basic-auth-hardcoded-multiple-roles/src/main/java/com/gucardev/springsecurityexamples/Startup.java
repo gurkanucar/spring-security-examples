@@ -26,10 +26,7 @@ public class Startup implements CommandLineRunner {
     admin.setUsername("admin");
     admin.setPassword("pass");
     admin.setEnabled(true);
-    admin.setCredentialsNonExpired(true);
-    admin.setAccountNonExpired(true);
-    admin.setAccountNonLocked(true);
-    admin.setAuthorities(Set.of(Role.ROLE_ADMIN, Role.ROLE_MOD));
+    admin.setRoles(Set.of(Role.ROLE_ADMIN, Role.ROLE_MOD));
     userService.createUser(admin);
 
     UserDto user = new UserDto();
@@ -37,17 +34,14 @@ public class Startup implements CommandLineRunner {
     user.setUsername("user");
     user.setPassword("pass");
     user.setEnabled(true);
-    user.setCredentialsNonExpired(true);
-    user.setAccountNonExpired(true);
-    user.setAccountNonLocked(true);
-    user.setAuthorities(Set.of(Role.ROLE_USER));
+    user.setRoles(Set.of(Role.ROLE_USER));
     userService.createUser(user);
 
     UserDto user2 = new UserDto();
     user2.setName("user2");
     user2.setUsername("user2");
     user2.setPassword("pass");
-    user2.setAuthorities(Set.of(Role.ROLE_USER));
+    user2.setRoles(Set.of(Role.ROLE_USER));
     userService.createUser(user2);
 
     UserDto mod = new UserDto();
@@ -55,10 +49,7 @@ public class Startup implements CommandLineRunner {
     mod.setUsername("mod");
     mod.setPassword("pass");
     mod.setEnabled(true);
-    mod.setCredentialsNonExpired(true);
-    mod.setAccountNonExpired(true);
-    mod.setAccountNonLocked(true);
-    mod.setAuthorities(Set.of(Role.ROLE_MOD));
+    mod.setRoles(Set.of(Role.ROLE_MOD));
     userService.createUser(mod);
   }
 }
