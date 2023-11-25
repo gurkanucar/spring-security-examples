@@ -23,15 +23,15 @@ public class Startup implements CommandLineRunner {
 
   private void createDummyData() {
     RoleDto adminRole = new RoleDto();
-    adminRole.setAuthority("ADMIN");
+    adminRole.setName("ADMIN");
     adminRole = roleService.createRole(adminRole);
 
     RoleDto userRole = new RoleDto();
-    userRole.setAuthority("USER");
+    userRole.setName("USER");
     userRole = roleService.createRole(userRole);
 
     RoleDto modRole = new RoleDto();
-    modRole.setAuthority("MODERATOR");
+    modRole.setName("MODERATOR");
     modRole = roleService.createRole(modRole);
 
     UserDto admin = new UserDto();
@@ -39,10 +39,7 @@ public class Startup implements CommandLineRunner {
     admin.setUsername("admin");
     admin.setPassword("pass");
     admin.setEnabled(true);
-    admin.setCredentialsNonExpired(true);
-    admin.setAccountNonExpired(true);
-    admin.setAccountNonLocked(true);
-    admin.setAuthorities(Set.of(adminRole, modRole));
+    admin.setRoles(Set.of(adminRole, modRole));
     userService.createUser(admin);
 
     UserDto user = new UserDto();
@@ -50,17 +47,14 @@ public class Startup implements CommandLineRunner {
     user.setUsername("user");
     user.setPassword("pass");
     user.setEnabled(true);
-    user.setCredentialsNonExpired(true);
-    user.setAccountNonExpired(true);
-    user.setAccountNonLocked(true);
-    user.setAuthorities(Set.of(userRole));
+    user.setRoles(Set.of(userRole));
     userService.createUser(user);
 
     UserDto user2 = new UserDto();
     user2.setName("user2");
     user2.setUsername("user2");
     user2.setPassword("pass");
-    user2.setAuthorities(Set.of(userRole));
+    user2.setRoles(Set.of(userRole));
     userService.createUser(user2);
 
     UserDto mod = new UserDto();
@@ -68,10 +62,7 @@ public class Startup implements CommandLineRunner {
     mod.setUsername("mod");
     mod.setPassword("pass");
     mod.setEnabled(true);
-    mod.setCredentialsNonExpired(true);
-    mod.setAccountNonExpired(true);
-    mod.setAccountNonLocked(true);
-    mod.setAuthorities(Set.of(modRole));
+    mod.setRoles(Set.of(modRole));
     userService.createUser(mod);
   }
 }
