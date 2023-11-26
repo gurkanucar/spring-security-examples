@@ -2,7 +2,7 @@ package com.gucardev.springsecurityexamples.security.oauth;
 
 import com.gucardev.springsecurityexamples.dto.RoleDto;
 import com.gucardev.springsecurityexamples.dto.UserDto;
-import com.gucardev.springsecurityexamples.model.CustomUserDetails;
+import com.gucardev.springsecurityexamples.security.CustomOauthUserDetails;
 import com.gucardev.springsecurityexamples.service.RoleService;
 import com.gucardev.springsecurityexamples.service.UserService;
 import java.util.List;
@@ -35,14 +35,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
       throw new InternalAuthenticationServiceException("The OAuth2 provider is not supported yet");
     }
 
-    CustomUserDetails customUserDetails =
+    CustomOauthUserDetails customUserDetails =
         oAuth2UserInfoExtractorOptional.get().extractUserInfo(oAuth2User);
     UserDto user = upsertUser(customUserDetails);
     customUserDetails.setId(user.getId());
     return customUserDetails;
   }
 
-  private UserDto upsertUser(CustomUserDetails customUserDetails) {
+  private UserDto upsertUser(CustomOauthUserDetails customUserDetails) {
     UserDto existingUser;
     try {
       existingUser = userService.getDtoByUsername(customUserDetails.getUsername());
@@ -57,13 +57,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
       user.setEmail(customUserDetails.getEmail());
       user.setOAuth2Provider(customUserDetails.getProvider());
       user.setEnabled(true);
-      user.setCredentialsNonExpired(true);
-      user.setAccountNonExpired(true);
-      user.setAccountNonLocked(true);
       user.setRoles(Set.of(role));
       return userService.createUser(user);
     }
-    //    update existing
+    //    update existing if necessary
     //    existingUser.setEmail(customUserDetails.getEmail());
     //    existingUser.setImageUrl(customUserDetails.getAvatarUrl());
 

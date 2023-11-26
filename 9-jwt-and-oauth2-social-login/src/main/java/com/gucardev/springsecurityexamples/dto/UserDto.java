@@ -14,29 +14,21 @@ import lombok.Setter;
 @Setter
 public class UserDto extends BaseDto {
 
+  private String email;
+
   @Null(groups = {CreateValidationGroup.class})
   @NotNull(groups = {UpdateValidationGroup.class})
   private Long id;
 
   private String name;
 
-  private String username;
-
   private OAuth2Provider oAuth2Provider;
 
-  private String email;
+  private String username;
 
-//  @NotNull(groups = {CreateValidationGroup.class})
-//  @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
-  private boolean accountNonExpired;
-
   private boolean isEnabled;
-
-  private boolean accountNonLocked;
-
-  private boolean credentialsNonExpired;
 
   private Set<RoleDto> roles;
 }

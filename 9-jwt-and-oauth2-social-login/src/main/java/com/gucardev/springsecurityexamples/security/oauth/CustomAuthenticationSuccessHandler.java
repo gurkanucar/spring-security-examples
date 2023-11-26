@@ -1,6 +1,6 @@
 package com.gucardev.springsecurityexamples.security.oauth;
 
-import com.gucardev.springsecurityexamples.model.CustomUserDetails;
+import com.gucardev.springsecurityexamples.security.CustomOauthUserDetails;
 import com.gucardev.springsecurityexamples.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,9 +30,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   protected void handle(
       HttpServletRequest request, HttpServletResponse response, Authentication authentication)
       throws IOException {
-    //        String targetUrl = "http://localhost:3000/oauth2/redirect";
+    // your frontend url for example react app:
+    // targetUrl = "http://localhost:3000/oauth2/redirect"
     String targetUrl = "http://localhost:8080/oauth2/redirect-success";
-    CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+    CustomOauthUserDetails user = (CustomOauthUserDetails) authentication.getPrincipal();
     String token = tokenService.generateAccessToken(user.getUsername());
     targetUrl =
         UriComponentsBuilder.fromUriString(targetUrl)

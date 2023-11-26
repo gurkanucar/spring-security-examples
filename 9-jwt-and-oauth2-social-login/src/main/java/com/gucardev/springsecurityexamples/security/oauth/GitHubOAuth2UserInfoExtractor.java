@@ -1,6 +1,6 @@
 package com.gucardev.springsecurityexamples.security.oauth;
 
-import com.gucardev.springsecurityexamples.model.CustomUserDetails;
+import com.gucardev.springsecurityexamples.security.CustomOauthUserDetails;
 import com.gucardev.springsecurityexamples.model.OAuth2Provider;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 public class GitHubOAuth2UserInfoExtractor implements OAuth2UserInfoExtractor {
 
   @Override
-  public CustomUserDetails extractUserInfo(OAuth2User oAuth2User) {
-    CustomUserDetails customUserDetails = new CustomUserDetails();
+  public CustomOauthUserDetails extractUserInfo(OAuth2User oAuth2User) {
+    CustomOauthUserDetails customUserDetails = new CustomOauthUserDetails();
     customUserDetails.setUsername(retrieveAttr("login", oAuth2User));
     customUserDetails.setName(retrieveAttr("name", oAuth2User));
     customUserDetails.setEmail(retrieveAttr("email", oAuth2User));

@@ -14,10 +14,6 @@ import org.springframework.security.core.GrantedAuthority;
 @Setter
 public class Role extends BaseEntity implements GrantedAuthority {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
   @Column(name = "role_name")
   private String name;
 
@@ -30,6 +26,6 @@ public class Role extends BaseEntity implements GrantedAuthority {
 
   @Override
   public String getAuthority() {
-    return this.name;
+    return getName();
   }
 }

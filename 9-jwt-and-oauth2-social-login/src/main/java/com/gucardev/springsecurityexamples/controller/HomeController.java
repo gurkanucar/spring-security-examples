@@ -16,7 +16,7 @@ public class HomeController {
   @RequestMapping("/oauth2/redirect-success")
   public ModelAndView callBack(@RequestParam(name = "token", required = false) String token) {
     ModelAndView mav = new ModelAndView("callBack");
-    mav.addObject("token", "your token is: " + token);
+    mav.addObject("token", token);
     return mav;
   }
 }

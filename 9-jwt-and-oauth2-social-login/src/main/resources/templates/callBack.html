@@ -22,11 +22,22 @@
             text-align: center;
             padding: 4px 0;
         }
+
+        .row {
+            margin-left: 50px;
+            margin-right: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
     </style>
 </head>
 <body>
 
 <h1>OAUTH2 Login Success</h1>
-<p th:text="${token}"></p>
+<div class="row">
+    <p><strong>your token is: </strong></p>
+    <p th:text="${token}"></p>
+</div>
 </body>
 </html>

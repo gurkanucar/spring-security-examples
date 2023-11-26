@@ -6,7 +6,6 @@ import com.gucardev.springsecurityexamples.model.User;
 import com.gucardev.springsecurityexamples.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,10 +58,7 @@ public class UserService {
         || repository.existsByEmail(dto.getEmail())) {
       throw new RuntimeException("user is already exists!");
     }
-    dto.setCredentialsNonExpired(true);
-    dto.setAccountNonExpired(true);
-    dto.setAccountNonLocked(true);
-    if (Objects.nonNull(dto.getPassword())) {
+    if (dto.getPassword() != null) {
       dto.setPassword(passwordEncoder.encode(dto.getPassword()));
     }
     return mapper.toDto(repository.save(mapper.toEntity(dto)));
