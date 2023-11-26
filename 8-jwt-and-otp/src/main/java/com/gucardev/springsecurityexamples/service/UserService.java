@@ -58,9 +58,6 @@ public class UserService {
         || repository.existsByEmail(dto.getEmail())) {
       throw new RuntimeException("user is already exists!");
     }
-    dto.setCredentialsNonExpired(true);
-    dto.setAccountNonExpired(true);
-    dto.setAccountNonLocked(true);
     dto.setPassword(passwordEncoder.encode(dto.getPassword()));
     return mapper.toDto(repository.save(mapper.toEntity(dto)));
   }

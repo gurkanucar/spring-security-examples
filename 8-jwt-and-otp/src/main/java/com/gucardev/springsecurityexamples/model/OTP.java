@@ -11,9 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class OTP extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
 
   private String username;
 
@@ -21,6 +18,8 @@ public class OTP extends BaseEntity {
   private String code;
 
   @Column private Instant expiryDate;
+
+  private boolean expireNever;
 
   private OTPType otpType;
 }

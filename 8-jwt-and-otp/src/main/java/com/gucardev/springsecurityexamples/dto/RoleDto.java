@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 public class RoleDto extends BaseDto {

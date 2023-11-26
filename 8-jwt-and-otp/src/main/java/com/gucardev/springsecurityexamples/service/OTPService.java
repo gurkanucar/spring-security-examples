@@ -6,6 +6,7 @@ import com.gucardev.springsecurityexamples.repository.OTPRepository;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,10 @@ import org.springframework.stereotype.Service;
 public class OTPService {
 
   private final OTPRepository otpRepository;
+
   @Value("${otp-variables.EXPIRES_ACC_ACTIVATE_CODE_MINUTE}")
   private long expiresAccActivateCodeDuration;
+
   @Value("${otp-variables.EXPIRES_PASSWORD_RESET_CODE_MINUTE}")
   private long expiresPasswordResetCodeDuration;
 
@@ -28,10 +31,10 @@ public class OTPService {
         otpRepository.findByUsernameAndOtpTypeOrderByCreatedDateTimeDesc(username, otpType);
     existing.ifPresent(otpRepository::delete);
 
-    Instant expirationTime;
+    Instant expirationTime = null;
+    boolean expireNever = false;
     if (expiresDuration == -1) {
-      // Set expirationTime to a far future date (effectively infinite)
-      expirationTime = Instant.MAX;
+      expireNever = true;
     } else {
       expirationTime = Instant.now().plus(Duration.ofMinutes(expiresDuration));
     }
@@ -40,12 +43,17 @@ public class OTPService {
         otpRepository.save(
             OTP.builder()
                 .otpType(otpType)
+                .expireNever(expireNever)
                 .expiryDate(expirationTime)
                 .username(username)
                 .code(code)
                 .build());
     log.info(otp.toString());
     return otp;
+  }
+
+  public Optional<OTP> findByUsernameAndType(String username, OTPType otpType) {
+    return otpRepository.findByUsernameAndOtpTypeOrderByCreatedDateTimeDesc(username, otpType);
   }
 
   public void verifyOTP(String username, String code, OTPType otpType) {
@@ -63,7 +71,7 @@ public class OTPService {
   }
 
   public void verifyOTPExpiration(OTP otp) {
-    if (otp.getExpiryDate().isBefore(Instant.now())) {
+    if (!otp.isExpireNever() && otp.getExpiryDate().isBefore(Instant.now())) {
       throw new RuntimeException("OTP has expired and cannot be used!");
     }
   }

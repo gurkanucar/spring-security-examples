@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter
 public class UserDto extends BaseDto {
 
+  private String email;
+
   @Null(groups = {CreateValidationGroup.class})
   @NotNull(groups = {UpdateValidationGroup.class})
   private Long id;
@@ -21,19 +23,11 @@ public class UserDto extends BaseDto {
 
   private String username;
 
-  private String email;
-
   @NotNull(groups = {CreateValidationGroup.class})
   @Null(groups = {UpdateValidationGroup.class})
   private String password;
 
-  private boolean accountNonExpired;
-
   private boolean isEnabled;
-
-  private boolean accountNonLocked;
-
-  private boolean credentialsNonExpired;
 
   private Set<RoleDto> roles;
 }
