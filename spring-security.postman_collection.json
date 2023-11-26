@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "83b7f1d4-e109-4e13-b3ba-26b97692b571",
+		"_postman_id": "320f1ca8-b39e-4d9c-bcfe-473b4e1c7585",
 		"name": "spring-security",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23162952"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"gurkanucar@yaani.com\"\r\n}",
+					"raw": "{\r\n    \"email\":\"admin@mail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -60,6 +60,36 @@
 					"path": [
 						"auth",
 						"forget-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "private endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImRldiIsImV4cCI6MTcwMDk1Njk2OH0.xjC30k_LYL0cO2TTWWz25ei-WP2ml3lM3kThseofh_M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/private/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"private",
+						"user"
 					]
 				}
 			},
@@ -211,36 +241,6 @@
 					"port": "8080",
 					"path": [
 						"role"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "private endpoint",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImRldiIsImV4cCI6MTcwMDk1Njk2OH0.xjC30k_LYL0cO2TTWWz25ei-WP2ml3lM3kThseofh_M",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/private/user",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"private",
-						"user"
 					]
 				}
 			},

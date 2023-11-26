@@ -3,6 +3,7 @@ package com.gucardev.springsecurityexamples.service;
 import com.gucardev.springsecurityexamples.dto.*;
 import com.gucardev.springsecurityexamples.event.UserRegisterEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ public class AuthService {
   private final OTPService otpService;
   private final ApplicationEventPublisher eventPublisher;
   private final UserService userService;
+  private final RoleService roleService;
   private final TokenService tokenService;
   private final AuthenticationManager authenticationManager;
   private final PasswordEncoder passwordEncoder;
@@ -53,6 +55,10 @@ public class AuthService {
   }
 
   public void register(UserDto userDto) {
+    RoleDto role =
+        roleService.getRoles().stream()
+                .filter(x -> x.getName().equals("USER")).findFirst().get();
+    userDto.setRoles(Set.of(role));
     var user = userService.createUser(userDto);
     eventPublisher.publishEvent(new UserRegisterEvent(this, user));
   }
