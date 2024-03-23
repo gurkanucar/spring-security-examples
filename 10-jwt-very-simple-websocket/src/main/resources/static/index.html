@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+<input type="text" id="token" placeholder="Enter token">
+<button onclick="connect()">Connect</button>
+<br>
+<input type="text" id="message" placeholder="Enter message">
+<button onclick="sendMessage()">Send Message</button>
+<br>
+<div id="output"></div>
+
+<script>
+    var ws;
+
+    function connect() {
+        var token = document.getElementById("token").value;
+        ws = new WebSocket("ws://localhost:8080/ws", [], {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        ws.onopen = function() {
+            console.log("Connected");
+        };
+
+        ws.onmessage = function(event) {
+            var output = document.getElementById("output");
+            output.innerHTML += "Received: " + event.data + "<br>";
+        };
+
+        ws.onerror = function(error) {
+            console.error("WebSocket Error: " + error);
+        };
+
+        ws.onclose = function() {
+            console.log("Disconnected");
+        };
+    }
+
+
+    function sendMessage() {
+        var message = document.getElementById("message").value;
+        var token = document.getElementById("token").value;
+        var customMessage = {
+            payload: message,
+            authentication: token // Assuming the token is used as the authentication field
+        };
+        ws.send(JSON.stringify(customMessage));
+
+    }
+</script>
+</body>
+</html>
